@@ -5,10 +5,17 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
+
 public class HelloController {
     // Definição de campos de entrada e botões da interface
     public TextField entrada2;
     public TextField entrada1;
+    public Button openJsWindowButton;
+    public Button resultadoContagem;
+    public Button resultadoSerie;
+    public Button resultadoConversao;
+    public Button botaoResultadoCactere;
 
     @FXML
     private Button quickSortBtn;           // Botão para executar o QuickSort
@@ -48,7 +55,175 @@ public class HelloController {
     private Button resultadoPrimo;         // Botão para mostrar o resultado de número primo
     @FXML
     private Button resultadoFibonacci;     // Botão para mostrar o resultado de Fibonacci
+    @FXML
+    private Button resultadoSoma;
+    @FXML
+    private Button calcularFatorial;
+    @FXML
+    private Button resultadoInverterDigitos;
+    @FXML
 
+    private SomaDeNumeros somaDeNumerosObj;
+
+    @FXML
+    protected void botaoConverterCaracter() {
+        ocultarTodosBotoes();
+        entrada1.setVisible(true); // Campo para valor de entrada
+        botaoResultadoCactere.setVisible(true); // Botão para realizar a conversão
+        resultadoMdc2.setVisible(true);
+    }
+
+    // Método para converter os caracteres em decimal
+    @FXML
+    protected void botaoResultadoConversaoCaractere() {
+        // Pega o valor de entrada
+        String string = entrada1.getText();
+
+        // Inicializa o objeto CaractereParaNumero com a string
+        CaractereParaNumero caractereObj = new CaractereParaNumero(string);
+
+        // Converte para decimal
+        int resultado = caractereObj.converterParaDecimal();
+
+        // Exibe o resultado
+        resultadoMdc2.setText("O formato decimal de \"" + string + "\" é: " + resultado);
+        voltar.setVisible(true); // Mostra o botão de voltar
+    }
+
+
+    // Método para iniciar a funcionalidade de conversão
+    @FXML
+    protected void botaoConverterBase() {
+
+        ocultarTodosBotoes();
+        entrada1.setVisible(true);  // Campo para valor de entrada
+        resultadoConversao.setVisible(true);     // Botão para realizar a conversão
+        resultadoMdc2.setVisible(true);
+    }
+
+    // Método para converter o número para binário
+    @FXML
+    protected void botaoResultadoConversao() {
+        // Pega o valor de entrada
+        int n = Integer.parseInt(entrada1.getText());
+
+        // Inicializa o objeto ConversaoBase com o valor
+        ConversaoBase conversaoObj = new ConversaoBase(n);
+
+        // Converte para binário
+        String resultado = conversaoObj.converterParaBinario();
+
+        // Exibe o resultado
+        resultadoMdc2.setText("O número " + n + " em binário é: " + resultado);
+        voltar.setVisible(true);  // Mostra o botão de voltar
+    }
+
+
+
+
+    @FXML
+    protected void botaoInverterDigitos() {
+        ocultarTodosBotoes();
+        entrada1.setVisible(true);  // Campo para valor de entrada
+        resultadoInverterDigitos.setVisible(true);  // Botão para inverter
+        resultadoMdc2.setVisible(true);
+    }
+
+    // Método para inverter os dígitos do número inserido
+    @FXML
+    protected void botaoResultadoInverter() {
+        // Pega o valor de entrada
+        int n = Integer.parseInt(entrada1.getText());
+
+        // Inicializa o objeto InverterDigitos com o valor
+        InverterDigitos inverterObj = new InverterDigitos(n);
+
+        // Inverte os dígitos
+        int resultado = inverterObj.inverter();
+
+        // Exibe o resultado
+        resultadoMdc2.setText("O número invertido é: " + resultado);
+        voltar.setVisible(true);  // Mostra o botão de voltar
+    }
+
+
+    @FXML
+    protected void botaoCalcularFatorial() {
+        ocultarTodosBotoes();
+        entrada1.setVisible(true);  // Campo para valor de entrada
+        calcularFatorial.setVisible(true); // Botão para cálculo
+        resultadoMdc2.setVisible(true);
+    }
+    @FXML
+    protected void botaoResultadoFatorial() {
+        // Pega o valor de entrada
+        int n = Integer.parseInt(entrada1.getText());
+
+        // Inicializa o objeto Fatorial com o valor
+        Fatorial fatorialObj = new Fatorial(n);
+
+        // Calcula o fatorial
+        int resultado = fatorialObj.calcularFatorial();
+
+        // Exibe o resultado
+        resultadoMdc2.setText("O fatorial de " + n + " é: " + resultado);
+        voltar.setVisible(true);  // Mostra o botão de voltar
+    }
+    @FXML
+    protected void botaoCalcularSerie() {
+        ocultarTodosBotoes();
+        entrada1.setVisible(true);  // Campo para número de termos
+        entrada2.setVisible(true);  // Campo para valor de x
+        resultadoMdc2.setVisible(true);
+        resultadoSerie.setVisible(true);
+    }
+    @FXML
+    protected void botaoResultadoSerie() {
+        // Pega os valores de entrada
+        int n = Integer.parseInt(entrada1.getText());
+        float x = Float.parseFloat(entrada2.getText());
+
+        // Inicializa o objeto SerieInfinita com os valores
+        SerieInfinita serieInfinitaObj = new SerieInfinita(n, x);
+
+        // Calcula o valor da série
+        float resultado = serieInfinitaObj.calcularSerie();
+
+        // Exibe o resultado
+        resultadoMdc2.setText("O valor da série é: " + resultado);
+        voltar.setVisible(true);  // Mostra o botão de voltar
+    }
+    @FXML
+    protected void botaoSomaDeNumeros() {
+        ocultarTodosBotoes();
+        entrada1.setVisible(true);  // Para a quantidade de números
+        entrada2.setVisible(true);  // Para o valor de cada número
+        resultadoSoma.setVisible(true);
+        resultadoMdc2.setVisible(true);
+        voltar.setVisible(true);
+    }
+    @FXML
+    protected void botaoResultadoSoma() {
+        if (somaDeNumerosObj == null) {
+            // Inicializa o objeto SomaDeNumeros com o número de entradas
+            int n = Integer.parseInt(entrada1.getText());
+            somaDeNumerosObj = new SomaDeNumeros(n);
+            resultadoMdc2.setText("Adicione " + n + " números.");
+        } else {
+            // Adiciona o próximo número à soma
+            int num = Integer.parseInt(entrada2.getText());
+            somaDeNumerosObj.adicionarNumero(num);
+
+            // Verifica se finalizou a soma
+            if (somaDeNumerosObj.finalizado()) {
+                // Exibe o resultado final
+                resultadoMdc2.setText("A soma dos números é: " + somaDeNumerosObj.getResultado());
+                voltar.setVisible(true);  // Mostra o botão de voltar
+            } else {
+                resultadoMdc2.setText("Número " + somaDeNumerosObj.getResultado() + " adicionado. Faltam " + (Integer.parseInt(entrada1.getText()) - somaDeNumerosObj.i) + " números.");
+            }
+        }
+    }
     // Método para executar o QuickSort
     @FXML
     protected void botaoQuickSort() {
@@ -71,6 +246,7 @@ public class HelloController {
         // Exibe os botões novamente e limpa os campos e resultados
         exibirTodosBotoes();
         limparCampos();
+        voltar.setVisible(false);
     }
 
     // Método para executar o cálculo do MDC
@@ -162,6 +338,36 @@ public class HelloController {
         // Exibe o resultado
         resultadoMdc2.setText(resultado);
     }
+    @FXML
+    protected void botaoContagem() {
+        ocultarTodosBotoes();
+        resultadoContagem.setVisible(true);
+        entrada1.setVisible(true); // Para o número de alunos
+        entrada2.setVisible(true); // Para as notas
+        resultadoMdc2.setVisible(true);
+    }
+
+    @FXML
+    protected void botaoResultadoContagem() {
+        int n = Integer.parseInt(entrada1.getText()); // Número de alunos
+
+        // Aqui assumimos que as notas são inseridas separadas por vírgulas, ex: "55,70,40"
+        String[] notasString = entrada2.getText().split(",");
+        int[] notas = new int[notasString.length];
+
+        // Conversão das notas para inteiros
+        for (int i = 0; i < notasString.length; i++) {
+            notas[i] = Integer.parseInt(notasString[i].trim());
+        }
+
+        // Instanciando a classe Contagem e chamando o método
+        Contagem contagem = new Contagem();
+        String resultado = contagem.contarAprovados(n, notas);
+
+        // Exibindo o resultado
+        resultadoMdc2.setText(resultado);
+        voltar.setVisible(true);
+    }
 
     @FXML
 
@@ -180,6 +386,7 @@ public class HelloController {
         numeroPrimo.setVisible(false);
         caractereParaNumero.setVisible(false);
         conversaoBase.setVisible(false);
+        resultadoContagem.setVisible(false);
     }
 
     // Função auxiliar para exibir todos os botões
@@ -210,5 +417,17 @@ public class HelloController {
         resultadoMdc2.setText("");
         resultadoPrimo.setVisible(false);
         resultadoFibonacci.setVisible(false);
+        resultadoMdc.setVisible(false);
+        resultadoContagem.setVisible(false);
     }
+    @FXML
+    protected void abrirJanelaJS() {
+        HelloApplication app = new HelloApplication();
+        try {
+            app.abrirNovaJanela();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
